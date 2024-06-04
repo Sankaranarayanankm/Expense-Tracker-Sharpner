@@ -16,7 +16,6 @@ const Login = () => {
     password: "",
     confirm: "",
   });
-  console.log(error)
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setState((prev) => {
@@ -61,7 +60,7 @@ const Login = () => {
             throw new Error(error.error.message || "Failed to login");
           }
           const resData = await response.json();
-          authCtx.login(resData.idToken);
+          authCtx.login(resData.idToken,resData.email);
           history.push('/welcome');
         } catch (error) {
           alert(error);
