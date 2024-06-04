@@ -1,13 +1,15 @@
 import React, { useCallback, useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import "./Header.css";
 import { authContext } from "../../Context/authContextProvider";
 
 const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
 
 const Header = () => {
+  const history = useHistory();
   const [sending, setSending] = useState(false);
   const authCtx = useContext(authContext);
+  console.log(authCtx)
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
     if (sending) return;
@@ -45,6 +47,10 @@ const Header = () => {
       verifyEmailHandler();
     }
   };
+  const logoutHandler = () => {
+    authCtx.logout();
+    history.replace("/");
+  };
 
   return (
     <header className="header">
@@ -63,9 +69,12 @@ const Header = () => {
         </ul>
       </nav>
       {authCtx.isLogin && (
-        <button onClick={verifyTokenHandler} className="verify">
-          {sending ? "Verifying..." : "Verify"}
-        </button>
+        <div>
+          <button onClick={verifyTokenHandler} className="verify">
+            {sending ? "Verifying..." : "Verify"}
+          </button>
+          <button onClick={logoutHandler}>Logout</button>
+        </div>
       )}
     </header>
   );

@@ -22,7 +22,7 @@
   color: darkmagenta;
 }
 
-.verify {
+button {
   padding: 8px 16px; 
   font-size: 14px; 
   background-color: rgb(191, 48, 191);
@@ -35,7 +35,7 @@
 
 }
 
-.verify:hover{
+button:hover{
   background-color: darkmagenta;
 }
  
