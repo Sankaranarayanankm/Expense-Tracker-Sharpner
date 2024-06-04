@@ -1,18 +1,22 @@
 import React, { useContext, useState } from "react";
 import "./Login.css";
-import { authContext } from "../Context/authContextProvider";
 import {useHistory} from 'react-router-dom';
+import { authContext } from "../../Context/authContextProvider";
+
 const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
 
 const Login = () => {
   const authCtx = useContext(authContext);
   const history=useHistory();
   const [isLogin, setIsLogin] = useState(false);
+  const [error,setError]=useState(false);
+  const [loading,setLoading]=useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
     confirm: "",
   });
+  console.log(error)
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setState((prev) => {
@@ -35,6 +39,8 @@ const Login = () => {
     // }
     if (isLogin) {
       async function login() {
+        setError(false);
+        setLoading(true);
         try {
           const response = await fetch(
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
@@ -59,12 +65,18 @@ const Login = () => {
           history.push('/welcome');
         } catch (error) {
           alert(error);
+          setError(true);
           console.log(error);
+        }
+        finally{
+          setLoading(false);
         }
       }
       login();
     } else {
       async function signup() {
+        setError(false);
+setLoading(true);
         try {
           const response = await fetch(
             `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
@@ -88,7 +100,10 @@ const Login = () => {
           console.log(resData);
         } catch (error) {
           alert(error);
+          setError(true);
           console.log(error);
+        }finally{
+          setLoading(false);
         }
       }
       signup();
@@ -124,7 +139,8 @@ const Login = () => {
           />
         )}
         {!isLogin && <br />}
-        <button>Sign Up</button>
+       { error && <p style={{color:'red'}}>Failed!..please check your credentials</p>}
+        <button>{loading?"Sending Request": "Sign Up"} </button>
       </form>
       <p>
         {isLogin ? "Don't have an account?" : "Have an account?"}

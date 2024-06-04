@@ -1,0 +1,52 @@
+.about-us {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.about-us h1, .about-us h2 {
+  color: #333;
+}
+
+.about-us p {
+  line-height: 1.6;
+  color: #555;
+}
+
+.about-us ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-us ul li {
+  background: #f9f9f9;
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 5px solid #db3ddb;
+}
+.about-us ul li:hover{
+  border-left: 5px solid pink;
+}
+
+.about-us ul li strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.signup-link {
+  margin-top: 20px;
+}
+
+.signup-link a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f42ce6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.signup-link a:hover {
+  background-color: #dd23c1;
+}

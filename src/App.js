@@ -1,11 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Products from "./pages/Products";
-import AboutUS from "./pages/AboutUS";
+import AboutUS from "./pages/AboutUS/AboutUS";
 import Header from "./components/Header/Header";
 import AuthContextProvider from "./Context/authContextProvider";
-import Welcome from "./pages/Welcome";
+import Welcome from "./pages/Welcome/Welcome";
+import Login from "./pages/Login/Login";
 
 
 const App = () => {
@@ -16,11 +15,8 @@ const App = () => {
         <Route path="/" exact>
           <Login />
         </Route>
-        <Route path="/welcome" exact>
+        <Route path="/welcome" >
           <Welcome />
-        </Route>
-        <Route path="/products" exact>
-          <Products />
         </Route>
         <Route path="/aboutus" exact>
           <AboutUS />

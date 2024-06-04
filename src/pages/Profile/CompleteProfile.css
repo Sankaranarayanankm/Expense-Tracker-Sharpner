@@ -1,0 +1,57 @@
+.profile-form {
+  position: relative;
+  margin-right: 3rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding:10px;
+}
+.profile-input{
+  display: flex;
+  align-items: center;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.profile-form h4{
+  font-weight:600;
+  padding:10px;
+  margin-bottom: 10px;
+
+}
+.profile-form label{
+  padding:20px;
+}
+.profile-form input{
+  margin-right: 10px;
+}
+.update{
+  background-color: plum;
+  padding:5px;
+  border:none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin:2px;
+  transition: all 0.4s ease-in;
+}
+.update:hover{
+  background-color: transparent;
+  color:purple;
+  border:1px solid purple;
+}
+.cancel{
+  background-color: white;
+  padding:5px;
+  border: 1px solid rgb(192, 64, 64);
+  color:orangered;
+  border-radius: 4px;
+  cursor: pointer;
+  position:absolute;
+  top:10px;
+  right:10px;
+}
+.cancel:hover{
+  border:1px solid orangered;
+  color:rgb(192, 64, 64);
+}

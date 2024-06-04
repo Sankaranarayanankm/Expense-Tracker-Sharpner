@@ -6,11 +6,11 @@
   height: auto;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 1px 1px rgba(74, 71, 237, 0.3);
+  box-shadow: 1px 1px  rgb(230, 143, 230);
   transition:all 0.3s ease;
 }
 .login:hover{
-  box-shadow: 1px 1px blue;
+  box-shadow: 1px 1px rgb(218, 54, 157);
 }
 
 .form {
@@ -39,8 +39,8 @@
   padding:5px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(114, 113, 222);
-  box-shadow: 2px 2px rgb(209, 209, 228);
+  background-color: rgb(246, 18, 181);
+  box-shadow: 2px 2px rgb(230, 143, 230);
   cursor: pointer;
   margin-bottom: 1rem;
   transition: all 0.4s ease-out;
