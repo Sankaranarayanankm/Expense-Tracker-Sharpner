@@ -1,9 +1,15 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(246, 200, 246);
+}
+
 .header nav ul {
+  
   display: flex;
   justify-content: center;
   list-style-type: none;
   gap: 2rem;
-  background-color: rgb(246, 200, 246);
   padding: 20px;
 }
 .header a {
@@ -16,4 +22,20 @@
   color: darkmagenta;
 }
 
+.verify {
+  padding: 8px 16px; 
+  font-size: 14px; 
+  background-color: rgb(191, 48, 191);
+  box-shadow: 1px 1px blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 15px;
+  cursor: pointer;
 
+}
+
+.verify:hover{
+  background-color: darkmagenta;
+}
+ 
