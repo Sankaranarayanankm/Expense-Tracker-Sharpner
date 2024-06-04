@@ -9,7 +9,6 @@ const Header = () => {
   const history = useHistory();
   const [sending, setSending] = useState(false);
   const authCtx = useContext(authContext);
-  console.log(authCtx)
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
     if (sending) return;

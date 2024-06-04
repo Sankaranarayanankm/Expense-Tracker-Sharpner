@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
-import "./Login.css";
-import {useHistory} from 'react-router-dom';
+import { useHistory ,Link} from "react-router-dom";
 import { authContext } from "../../Context/authContextProvider";
+import "./Login.css";
+
 
 const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
 
 const Login = () => {
   const authCtx = useContext(authContext);
-  const history=useHistory();
+  // const [password, setPassword] = useState(true);
+  const history = useHistory();
   const [isLogin, setIsLogin] = useState(false);
-  const [error,setError]=useState(false);
-  const [loading,setLoading]=useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -60,14 +62,13 @@ const Login = () => {
             throw new Error(error.error.message || "Failed to login");
           }
           const resData = await response.json();
-          authCtx.login(resData.idToken,resData.email);
-          history.push('/welcome');
+          authCtx.login(resData.idToken, resData.email);
+          history.push("/welcome");
         } catch (error) {
           alert(error);
           setError(true);
           console.log(error);
-        }
-        finally{
+        } finally {
           setLoading(false);
         }
       }
@@ -75,7 +76,7 @@ const Login = () => {
     } else {
       async function signup() {
         setError(false);
-setLoading(true);
+        setLoading(true);
         try {
           const response = await fetch(
             `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
@@ -101,13 +102,14 @@ setLoading(true);
           alert(error);
           setError(true);
           console.log(error);
-        }finally{
+        } finally {
           setLoading(false);
         }
       }
       signup();
     }
   };
+ 
   return (
     <div className="login">
       <form className="form" onSubmit={submitHandler}>
@@ -138,8 +140,11 @@ setLoading(true);
           />
         )}
         {!isLogin && <br />}
-       { error && <p style={{color:'red'}}>Failed!..please check your credentials</p>}
-        <button>{loading?"Sending Request": "Sign Up"} </button>
+        {error && (
+          <p style={{ color: "red" }}>Failed!..please check your credentials</p>
+        )}
+        <button>{loading ? "Sending Request" : "Sign Up"} </button>
+        {isLogin && <Link to='/forgetpassword'>Forget Password?</Link> }
       </form>
       <p>
         {isLogin ? "Don't have an account?" : "Have an account?"}
