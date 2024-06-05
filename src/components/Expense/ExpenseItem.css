@@ -11,20 +11,20 @@
   margin: 1rem;
   border-radius: 5px;
   border: none;
-  box-shadow: 1px 1px 5px 1px rgba(244, 3, 131,0.2);
+  box-shadow: 1px 1px 5px 1px rgba(244, 3, 131, 0.2);
   transition: all 0.3s ease;
 }
 .expense-item:hover {
   box-shadow: 1px 1px 5px 1px rgba(244, 3, 131, 0.6);
 }
-.expense-item p{
-  margin:2px;
+.expense-item p {
+  margin: 2px;
 }
-.expense-item h3{
-  margin:3px;
+.expense-item h3 {
+  margin: 3px;
 }
 
-.expense-item button {
+.delete {
   position: absolute;
   padding: 0px;
   margin: 0px;
@@ -35,7 +35,16 @@
   right: 5px;
   transition: all 0.3s ease;
 }
+.edit {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  background-color: purple;
+  transition: all 0.3s ease;
+  top: 5px;
+  left: 5px;
+}
 
-.expense-item button:hover{
+.expense-item button:hover {
   background-color: magenta;
 }

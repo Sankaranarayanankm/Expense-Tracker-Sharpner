@@ -4,11 +4,15 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import AuthContextProvider from "./Context/authContextProvider";
+import ExpenseContextProvider from "./Context/ExpenseContextProvider";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthContextProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </AuthContextProvider>
+  <ExpenseContextProvider>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthContextProvider>
+  </ExpenseContextProvider>
 );

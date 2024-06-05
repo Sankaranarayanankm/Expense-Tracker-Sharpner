@@ -9,7 +9,7 @@ const Header = () => {
   const history = useHistory();
   const [sending, setSending] = useState(false);
   const authCtx = useContext(authContext);
-  console.log(authCtx)
+  
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
     if (sending) return;
@@ -39,7 +39,7 @@ const Header = () => {
     } finally {
       setSending(false);
     }
-  }, [authCtx.id]);
+  }, [authCtx.id,sending]);
 
   // handler to double check the weather the token is valid or not
   const verifyTokenHandler = () => {
