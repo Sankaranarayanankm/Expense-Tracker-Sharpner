@@ -34,19 +34,21 @@
   margin-bottom: 5px;
 }
 
-.signup-link {
-  margin-top: 20px;
-}
 
-.signup-link a {
-  display: inline-block;
+.signup {
   padding: 10px 20px;
+  text-decoration: none;
   background-color: #f42ce6;
   color: white;
   text-decoration: none;
   border-radius: 5px;
+  transition: all 0.4s ease;
 }
-
-.signup-link a:hover {
-  background-color: #dd23c1;
+.signup a{
+  text-decoration: none;
+}
+.signup:hover {
+  background-color: white;
+  border:1px solid purple;
+  color:purple;
 }

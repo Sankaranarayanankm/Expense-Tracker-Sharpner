@@ -56,8 +56,13 @@ const Header = () => {
       <nav>
         <ul>
           <li>
-            <NavLink exact activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/expense">
               Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact activeClassName="active" to="/welcome">
+              Profile
             </NavLink>
           </li>
           <li>

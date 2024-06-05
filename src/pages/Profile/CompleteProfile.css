@@ -52,6 +52,7 @@
   right:10px;
 }
 .cancel:hover{
-  border:1px solid orangered;
+  border:2px solid orangered;
   color:rgb(192, 64, 64);
+  background-color: white;
 }

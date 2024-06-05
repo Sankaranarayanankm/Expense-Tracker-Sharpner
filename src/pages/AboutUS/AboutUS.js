@@ -1,8 +1,10 @@
-import React from "react";
-import {Link} from 'react-router-dom';
-import "./AboutUs.css"; 
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import "./AboutUs.css";
+import { authContext } from "../../Context/authContextProvider";
 
 const AboutUs = () => {
+  const authCtx = useContext(authContext);
   return (
     <div className="about-us">
       <h1>About Us</h1>
@@ -89,9 +91,11 @@ const AboutUs = () => {
         journey to better financial management starts here!
       </p>
 
-      <div className="signup-link">
-        <Link to="/">Sign up here</Link>
-      </div>
+      {!authCtx.isLogin && (
+        <button className="signup">
+          <Link to="/">Sign up here</Link>
+        </button>
+      )}
     </div>
   );
 };

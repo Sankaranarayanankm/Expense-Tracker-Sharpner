@@ -1,0 +1,41 @@
+.expense-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 200px;
+  height: 150px;
+  padding: 10px;
+  background-color: white !important;
+  margin: 1rem;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 1px 5px 1px rgba(244, 3, 131,0.2);
+  transition: all 0.3s ease;
+}
+.expense-item:hover {
+  box-shadow: 1px 1px 5px 1px rgba(244, 3, 131, 0.6);
+}
+.expense-item p{
+  margin:2px;
+}
+.expense-item h3{
+  margin:3px;
+}
+
+.expense-item button {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  background-color: purple;
+  border: none;
+  cursor: pointer;
+  top: 5px;
+  right: 5px;
+  transition: all 0.3s ease;
+}
+
+.expense-item button:hover{
+  background-color: magenta;
+}

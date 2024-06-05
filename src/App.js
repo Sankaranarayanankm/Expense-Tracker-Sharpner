@@ -6,6 +6,8 @@ import { authContext } from "./Context/authContextProvider";
 import Welcome from "./pages/Welcome/Welcome";
 import Login from "./pages/Login/Login";
 import ForgetPasswrod from "./pages/Login/ForgetPasswrod";
+import CompleteProfile from "./pages/Profile/CompleteProfile";
+import ExpenseList from "./components/Expense/ExpenseList";
 
 const App = () => {
   const authCtx = useContext(authContext);
@@ -15,9 +17,14 @@ const App = () => {
       <Switch>
         <Route path="/" exact>
           {!authCtx.isLogin && <Login />}
-          {authCtx.isLogin && <Welcome />}
+          {authCtx.isLogin && <ExpenseList />}
         </Route>
 
+        {authCtx.isLogin && (
+          <Route path="/expense">
+            <ExpenseList />
+          </Route>
+        )}
         {authCtx.isLogin && (
           <Route path="/welcome">
             <Welcome />
@@ -25,6 +32,9 @@ const App = () => {
         )}
         <Route path="/aboutus" exact>
           <AboutUS />
+        </Route>
+        <Route path="/complete-profile">
+          <CompleteProfile />
         </Route>
         {!authCtx.isLogin && (
           <Route path="/forgetpassword">

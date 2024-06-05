@@ -144,7 +144,7 @@ const CompleteProfile = () => {
          { error && <p>An error Occured!</p>}
         </div>
         <button className="update">{loading?"Updating":"Update"}</button>
-        <button onClick={cancelHandler} className="cancel" type="cancel">
+        <button onClick={cancelHandler} className="cancel" type="button">
           cancel
         </button>
       </form>

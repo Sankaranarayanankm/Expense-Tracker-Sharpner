@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
-import { useHistory ,Link} from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { authContext } from "../../Context/authContextProvider";
 import "./Login.css";
-
 
 const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
 
 const Login = () => {
   const authCtx = useContext(authContext);
-  // const [password, setPassword] = useState(true);
   const history = useHistory();
   const [isLogin, setIsLogin] = useState(false);
   const [error, setError] = useState(false);
@@ -33,11 +31,20 @@ const Login = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     // uncomment this validation logic after creating the project
-    // if(state.email.length==0 && state.password.length==0 && state.confirm.length==0) return;
-    // if(state.password!==state.confirm){
-    //   alert("type same password in password field and conform password field");
-    //   return;
-    // }
+    if (!isLogin) {
+      if (
+        state.email.length === 0 &&
+        state.password.length === 0 &&
+        state.confirm.length === 0
+      )
+        return;
+      if (state.password !== state.confirm) {
+        alert(
+          "type same password in password field and conform password field"
+        );
+        return;
+      }
+    }
     if (isLogin) {
       async function login() {
         setError(false);
@@ -63,7 +70,7 @@ const Login = () => {
           }
           const resData = await response.json();
           authCtx.login(resData.idToken, resData.email);
-          history.push("/welcome");
+          history.push("/expense");
         } catch (error) {
           alert(error);
           setError(true);
@@ -109,7 +116,7 @@ const Login = () => {
       signup();
     }
   };
- 
+
   return (
     <div className="login">
       <form className="form" onSubmit={submitHandler}>
@@ -144,7 +151,7 @@ const Login = () => {
           <p style={{ color: "red" }}>Failed!..please check your credentials</p>
         )}
         <button>{loading ? "Sending Request" : "Sign Up"} </button>
-        {isLogin && <Link to='/forgetpassword'>Forget Password?</Link> }
+        {isLogin && <Link to="/forgetpassword">Forget Password?</Link>}
       </form>
       <p>
         {isLogin ? "Don't have an account?" : "Have an account?"}
