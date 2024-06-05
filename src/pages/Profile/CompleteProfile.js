@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import "./CompleteProfile.css";
 import { authContext } from "../../Context/authContextProvider";
 
-const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
+const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
+
 
 const CompleteProfile = () => {
   const authCtx = useContext(authContext);
@@ -49,7 +50,7 @@ const CompleteProfile = () => {
         }, {});
        
         // prefilling the data
-        const value = obj[authCtx.token.email];
+        const value = obj[authCtx.email];
         setState({
           name: value.displayName,
           url: value.photoUrl,
@@ -61,8 +62,8 @@ const CompleteProfile = () => {
         setLoading(false);
       }
     }
-    getData(authCtx.token.id);
-  }, [authCtx.token]);
+    getData(authCtx.id);
+  }, [authCtx]);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -88,7 +89,7 @@ const CompleteProfile = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              idToken: authCtx.token.id,
+              idToken: authCtx.id,
               displayName: state.name,
               photoUrl: state.url,
               returnSecureToken: true,

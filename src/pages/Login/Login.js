@@ -3,7 +3,8 @@ import { useHistory, Link } from "react-router-dom";
 import { authContext } from "../../Context/authContextProvider";
 import "./Login.css";
 
-const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
+const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
+
 
 const Login = () => {
   const authCtx = useContext(authContext);

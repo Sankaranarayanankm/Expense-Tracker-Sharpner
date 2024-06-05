@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 export const authContext = React.createContext({
-  token: "",
+  id: "",
+  email: "",
   isLogin: false,
   login: () => {},
   logout: () => {},
@@ -20,7 +21,8 @@ const AuthContextProvider = (props) => {
     localStorage.removeItem("token");
   };
   const defalutContext = {
-    token,
+    id:token.id,
+    email: token.email,
     isLogin: updatedStatus,
     login: loginHandler,
     logout: logoutHandler,

@@ -3,12 +3,13 @@ import { NavLink, useHistory } from "react-router-dom";
 import "./Header.css";
 import { authContext } from "../../Context/authContextProvider";
 
-const apiKey = "AIzaSyAtrHsSiUVCroZLd5JQCn7IR81mEVz-m2w";
+const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
 
 const Header = () => {
   const history = useHistory();
   const [sending, setSending] = useState(false);
   const authCtx = useContext(authContext);
+  console.log(authCtx)
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
     if (sending) return;
@@ -23,7 +24,7 @@ const Header = () => {
           },
           body: JSON.stringify({
             requestType: "VERIFY_EMAIL",
-            idToken: authCtx.token.id,
+            idToken: authCtx.id,
           }),
         }
       );
@@ -38,11 +39,11 @@ const Header = () => {
     } finally {
       setSending(false);
     }
-  }, [authCtx.token.id]);
+  }, [authCtx.id]);
 
   // handler to double check the weather the token is valid or not
   const verifyTokenHandler = () => {
-    if (!!authCtx.token.id) {
+    if (!!authCtx.id) {
       verifyEmailHandler();
     }
   };
