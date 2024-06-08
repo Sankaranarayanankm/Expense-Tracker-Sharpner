@@ -1,15 +1,19 @@
-import React, { useContext} from "react";
+import React, { useContext, useState } from "react";
 import ExpenseItem from "./ExpenseItem";
-import './ExpenseList.css';
+import "./ExpenseList.css";
 import ExpenseForm from "./ExpenseForm";
 import { expenseContext } from "../../Context/ExpenseContextProvider";
 
 const ExpenseList = () => {
- const expenseCtx=useContext(expenseContext);
- 
+  const [showForm, setShowForm] = useState(false);
+  const showFormHandler = () => setShowForm(true);
+  const hideFormHandler = () => setShowForm(false);
+  const expenseCtx = useContext(expenseContext);
+
   return (
-    <div>
-      <ExpenseForm  />
+    <div className="add-expense">
+      {showForm && <ExpenseForm hide={hideFormHandler} />}
+      {!showForm && <button onClick={showFormHandler}>Add Expense</button>}
       <ul className="expense-list">
         {expenseCtx.items.map((item, ind) => (
           <ExpenseItem key={ind} {...item} />

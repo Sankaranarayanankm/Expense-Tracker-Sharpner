@@ -4,19 +4,24 @@ import AboutUS from "./pages/AboutUS/AboutUS";
 import Header from "./components/Header/Header";
 import { authContext } from "./Context/authContextProvider";
 import Welcome from "./pages/Welcome/Welcome";
-import Login from "./pages/Login/Login";
 import ForgetPasswrod from "./pages/Login/ForgetPasswrod";
 import CompleteProfile from "./pages/Profile/CompleteProfile";
 import ExpenseList from "./components/Expense/ExpenseList";
+import Signup from "./pages/Login/Signup";
+import LoginForm from "./pages/Login/LoginForm";
 
+// add tostify
 const App = () => {
   const authCtx = useContext(authContext);
   return (
     <>
       <Header />
       <Switch>
+        <Route path="/signup">
+          <Signup />
+        </Route>
         <Route path="/" exact>
-          {!authCtx.isLogin && <Login />}
+          {!authCtx.isLogin && <LoginForm />}
           {authCtx.isLogin && <ExpenseList />}
         </Route>
 
