@@ -9,11 +9,18 @@ const ExpenseList = () => {
   const showFormHandler = () => setShowForm(true);
   const hideFormHandler = () => setShowForm(false);
   const expenseCtx = useContext(expenseContext);
+  const totalExpense = expenseCtx.items.reduce((acc, item) => {
+    return acc + +item.money;
+  }, 0);
+  console.log(totalExpense);
 
   return (
     <div className="add-expense">
       {showForm && <ExpenseForm hide={hideFormHandler} />}
-      {!showForm && <button onClick={showFormHandler}>Add Expense</button>}
+      <div>
+        {!showForm && <button onClick={showFormHandler}>Add Expense</button>}
+        {totalExpense > 10000 && <button className="get-premium">Get Premium Features</button>}
+      </div>
       <ul className="expense-list">
         {expenseCtx.items.map((item, ind) => (
           <ExpenseItem key={ind} {...item} />

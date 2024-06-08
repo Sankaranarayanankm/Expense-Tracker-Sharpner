@@ -1,8 +1,20 @@
-.expense-list{
+.expense-list {
   display: flex;
   flex-wrap: wrap;
 }
 
-.add-expense{
+.add-expense {
   text-align: center;
+}
+
+.get-premium {
+  background-color: gold;
+  color: white;
+  box-shadow: 2px 2px 2px 1px silver;
+  font-weight: bold;
+}
+
+.get-premium:hover {
+  background-color: goldenrod;
+  color: white;
 }
