@@ -22,7 +22,7 @@ const initialState = {
 };
 const reducer = (state, action) => {
   if (action.type === "ADD") {
-    console.log(action.item);
+    
     const updatedItems = state.items.concat(action.item);
     return {
       ...state,
