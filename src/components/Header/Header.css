@@ -1,11 +1,10 @@
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   background-color: rgb(246, 200, 246);
 }
 
 .header nav ul {
-  
   display: flex;
   justify-content: center;
   list-style-type: none;
@@ -22,9 +21,14 @@
   color: darkmagenta;
 }
 
+.toggle-modes{
+  display: flex;
+  align-items: center;
+}
+
 button {
-  padding: 8px 16px; 
-  font-size: 14px; 
+  padding: 8px 16px;
+  font-size: 14px;
   background-color: rgb(191, 48, 191);
   box-shadow: 1px 1px blue;
   color: white;
@@ -32,10 +36,8 @@ button {
   border-radius: 5px;
   margin: 15px;
   cursor: pointer;
-
 }
 
-button:hover{
+button:hover {
   background-color: darkmagenta;
 }
- 

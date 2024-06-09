@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import AboutUS from "./pages/AboutUS/AboutUS";
 import Header from "./components/Header/Header";
@@ -12,10 +12,12 @@ import LoginForm from "./pages/Login/LoginForm";
 
 // add tostify
 const App = () => {
+  const [darkMode,setDarkMode]=useState(false);
+  const toggleDarkMode=()=>{setDarkMode(prev=>!prev)};
   const authCtx = useContext(authContext);
   return (
-    <>
-      <Header />
+    <div id={darkMode?'dark':'light'}>
+      <Header darkMode={darkMode} toggleMode={toggleDarkMode} />
       <Switch>
         <Route path="/signup">
           <Signup />
@@ -50,7 +52,7 @@ const App = () => {
           <Redirect to="/" />
         </Route>
       </Switch>
-    </>
+    </div>
   );
 };
 

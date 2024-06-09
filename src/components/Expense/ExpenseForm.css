@@ -7,8 +7,7 @@
   border-radius: 5px;
   box-shadow: 1px 1px 4px 4px rgba(255, 0, 255, 0.7);
 }
-.expense-input:hover {
-}
+
 
 .expense-form {
   display: flex;

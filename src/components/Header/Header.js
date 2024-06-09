@@ -1,15 +1,18 @@
 import React, { useCallback, useContext, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import "./Header.css";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import { authContext } from "../../Context/authContextProvider";
 
 const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
 
-const Header = () => {
+const Header = (props) => {
   const history = useHistory();
   const [sending, setSending] = useState(false);
   const authCtx = useContext(authContext);
-  
+
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
     if (sending) return;
@@ -39,7 +42,7 @@ const Header = () => {
     } finally {
       setSending(false);
     }
-  }, [authCtx.id,sending]);
+  }, [authCtx.id, sending]);
 
   // handler to double check the weather the token is valid or not
   const verifyTokenHandler = () => {
@@ -74,8 +77,13 @@ const Header = () => {
         </ul>
       </nav>
       {authCtx.isLogin && (
+        <divv className="toggle-modes" onClick={props.toggleMode}>
+          {props.darkMode ? <LightModeIcon /> : <DarkModeOutlinedIcon />}
+        </divv>
+      )}
+      {authCtx.isLogin && (
         <div>
-          <button onClick={verifyTokenHandler} className="verify">
+          <button onClick={verifyTokenHandler}>
             {sending ? "Verifying..." : "Verify"}
           </button>
           <button onClick={logoutHandler}>Logout</button>

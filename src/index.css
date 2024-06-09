@@ -1,20 +1,125 @@
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7f9fc;
-
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Dark mode styles */
+
+/* adding dark mode stlyes to header  */
+
+
+
+#dark .header {
+  background-color: #333;
+  border-bottom: 1px solid white;
+  box-shadow: 1px 1px white;
+}
+#dark button {
+  transition: all 0.3s ease;
+}
+
+#dark .header a {
+  color: white;
+}
+
+#dark .header a:hover,
+#dark .header .active {
+  color: #bb86fc;
+}
+
+#dark .header button {
+  box-shadow: 1px 1px 4px 1px whitesmoke;
+  background-color: #7818ee;
+  border: none;
+  color: white;
+}
+
+#dark button:hover {
+  background-color: #3700b3;
+  color: lightblue;
+}
+
+/* adding dark mode styles to expense items  */
+
+/* expense list  */
+
+#dark .add-expense {
+  background-color: #333;
+}
+
+#dark button {
+  box-shadow: 1px 1px 4px 1px whitesmoke;
+  background-color: #7818ee;
+}
+
+#dark .add-expense .get-premium {
+  color: gold;
+  box-shadow: 1px 1px 3px 2px gold;
+}
+
+/* expense items  */
+#dark .expense-item {
+  box-shadow: 1px 1px 1px 1px #7818ee;
+}
+#dark .expense-item:hover {
+  box-shadow: 1px 1px 3px 2px #8649d0;
+}
+
+#dark .expense-item .edit:hover {
+  color: white;
+}
+#dark .expense-item .delete:hover {
+  color: white;
+}
+
+/* adding dark mode to about us page  */
+#dark .about-us {
+  background-color: #333;
+}
+#dark .about-us h1,
+.about-us h2 {
+  color: white;
+}
+#dark .about-us p {
+  color: white;
+}
+
+#dark .about-us ul li {
+  border-left: 5px solid #7818ee;
+}
+#dark .about-us .signup a {
+  color: white;
+}
+
+/* adding dark mode color to login form  */
+
+#dark .login {
+  border: 1px solid #3700b3;
+  box-shadow: 1px 1px 1px 1px #3700b3;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#dark .form input:hover {
+  border: 1px solid #3700b3;
+}
+
+/* adding dark mode color to complete profile  */
+
+#dark .profile-form .cancel {
+ color:white;
+ border:1px solid white;
 }
