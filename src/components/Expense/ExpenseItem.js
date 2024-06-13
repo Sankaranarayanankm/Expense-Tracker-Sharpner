@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import "./ExpenseItem.css";
-import { expenseContext } from "../../Context/ExpenseContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteExpenseHandler, editExpenseHandler } from "../../store/expense-action";
 
 const ExpenseItem = (props) => {
-  const expenseCtx = useContext(expenseContext);
-const editHandler=(id)=>{
-  // console.log(id)/
-  expenseCtx.editItem(id);
+  const email=useSelector(state=>state.auth.email);
+  const dispatch=useDispatch();
+const editHandler=(id)=>{   
+  dispatch(editExpenseHandler(email,id));
+}
+const deleteItemHandler=id=>{
+  dispatch(deleteExpenseHandler(email,id));
 }
   return (
     <div className="expense-item">
@@ -17,7 +21,7 @@ const editHandler=(id)=>{
       <p>category:{props.category}</p>
       <button
         className="delete"
-        onClick={() => expenseCtx.deleteItem(props.id)}
+        onClick={() => deleteItemHandler(props.id)}
       >
         <DeleteOutlineIcon />
       </button>

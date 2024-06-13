@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./AboutUs.css";
-import { authContext } from "../../Context/authContextProvider";
+import { useSelector } from "react-redux";
 
 const AboutUs = () => {
-  const authCtx = useContext(authContext);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+  console.log(isLogin)
   return (
     <div className="about-us">
       <h1>About Us</h1>
@@ -91,8 +92,8 @@ const AboutUs = () => {
         journey to better financial management starts here!
       </p>
 
-      {!authCtx.isLogin && (
-        <button className="signup">
+      {!isLogin && (
+        <button label='button' className="signup">
           <Link to="/">Sign up here</Link>
         </button>
       )}

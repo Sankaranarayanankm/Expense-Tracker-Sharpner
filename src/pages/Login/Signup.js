@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import "./Login.css";
-
-const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
+import { apiKey } from "../../store/authSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const Signup = () => {
-
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
@@ -22,11 +21,9 @@ const Signup = () => {
       };
     });
   };
-  const toggleHandler = () => {};
   const submitHandler = (event) => {
     event.preventDefault();
     // uncomment this validation logic after creating the project
-
     if (
       state.email.length === 0 &&
       state.password.length === 0 &&
@@ -59,12 +56,13 @@ const Signup = () => {
           const error = await response.json();
           throw new Error(error.error.message || "Failed to signup");
         }
+        toast.success("Successfully logged in");
         const resData = await response.json();
         console.log(resData);
-        history.push('/login');
+        history.push("/login");
       } catch (error) {
-        alert(error);
-
+        // alert(error);
+        // toast.error(error.message);
         console.log(error);
       } finally {
         setLoading(false);
@@ -74,45 +72,49 @@ const Signup = () => {
   };
 
   return (
-    <div className="login">
-      <form className="form" onSubmit={submitHandler}>
-        <h1> SignUp</h1>
-        <input
-          type="email"
-          value={state.email}
-          onChange={changeHandler}
-          name="email"
-          placeholder="Email"
-        />
-        <br />
-        <input
-          type="password"
-          value={state.password}
-          onChange={changeHandler}
-          name="password"
-          placeholder="Passwrod"
-        />
-        <br />
+    <>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
 
-        <input
-          type="confirm"
-          value={state.confirm}
-          onChange={changeHandler}
-          name="confirm"
-          placeholder="Confirm Password"
-        />
+      <div className="login">
+        <form className="form" onSubmit={submitHandler}>
+          <h1> SignUp</h1>
+          <input
+            type="email"
+            value={state.email}
+            onChange={changeHandler}
+            name="email"
+            placeholder="Email"
+          />
+          <br />
+          <input
+            type="password"
+            value={state.password}
+            onChange={changeHandler}
+            name="password"
+            placeholder="Passwrod"
+          />
+          <br />
 
-        <br />
+          <input
+            type="password"
+            value={state.confirm}
+            onChange={changeHandler}
+            name="confirm"
+            placeholder="Confirm Password"
+          />
 
-        <button>{loading ? "Sending Request" : "Sign Up"} </button>
-      </form>
-      <p>
-        Have an account?
-        <span className="toggler" onClick={toggleHandler}>
+          <br />
+
+          <button>{loading ? "Sending Request" : "Sign Up"} </button>
+        </form>
+        <p>
+          Have an account?
           <Link to="/login">Login</Link>
-        </span>
-      </p>
-    </div>
+        </p>
+      </div>
+    </>
   );
 };
 

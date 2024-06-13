@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useHistory } from "react-router-dom";
 import "./CompleteProfile.css";
-import { authContext } from "../../Context/authContextProvider";
-
-const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
-
+import { apiKey } from "../../store/authSlice";
+import { useSelector } from "react-redux";
 
 const CompleteProfile = () => {
-  const authCtx = useContext(authContext);
-  const [loading,setLoading]=useState(false);
-  const [error,setError]=useState(false);
+  const id = useSelector((state) => state.auth.id);
+  console.log(id);
+  const email = useSelector((state) => state.auth.email);
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     name: "",
     url: "",
@@ -21,7 +20,6 @@ const CompleteProfile = () => {
   useEffect(() => {
     async function getData(id) {
       setLoading(true);
-      setError(false);
       try {
         const response = await fetch(
           `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`,
@@ -37,7 +35,6 @@ const CompleteProfile = () => {
         );
         if (!response.ok) {
           const errorData = await response.json();
-          setError(true);
           throw new Error(errorData.error.message || "Failed to get Data");
         }
         const resData = await response.json();
@@ -48,22 +45,21 @@ const CompleteProfile = () => {
             [item.email]: item,
           };
         }, {});
-       
+
         // prefilling the data
-        const value = obj[authCtx.email];
+        const value = obj[email];
         setState({
           name: value.displayName,
           url: value.photoUrl,
         });
       } catch (error) {
         alert(error);
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     }
-    getData(authCtx.id);
-  }, [authCtx]);
+    getData(id);
+  }, [id, email]);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -80,7 +76,6 @@ const CompleteProfile = () => {
     async function updateProfile() {
       try {
         setLoading(true);
-        setError(false);
         const response = await fetch(
           `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${apiKey}`,
           {
@@ -89,7 +84,7 @@ const CompleteProfile = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              idToken: authCtx.id,
+              idToken: id,
               displayName: state.name,
               photoUrl: state.url,
               returnSecureToken: true,
@@ -98,7 +93,6 @@ const CompleteProfile = () => {
         );
         if (!response.ok) {
           const errorData = await response.json();
-          setError(true);
           throw new Error(
             errorData.error.message || "Failed to update your profile"
           );
@@ -107,9 +101,7 @@ const CompleteProfile = () => {
         console.log(resData);
       } catch (error) {
         console.log(error);
-        alert(error);
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     }
@@ -142,9 +134,8 @@ const CompleteProfile = () => {
             onChange={changeHandler}
           />
           <br />
-         { error && <p>An error Occured!</p>}
         </div>
-        <button className="update">{loading?"Updating":"Update"}</button>
+        <button className="update">{loading ? "Updating" : "Update"}</button>
         <button onClick={cancelHandler} className="cancel" type="button">
           cancel
         </button>

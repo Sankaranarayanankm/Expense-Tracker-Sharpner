@@ -1,49 +1,65 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import AboutUS from "./pages/AboutUS/AboutUS";
 import Header from "./components/Header/Header";
-import { authContext } from "./Context/authContextProvider";
 import Welcome from "./pages/Welcome/Welcome";
 import ForgetPasswrod from "./pages/Login/ForgetPasswrod";
 import CompleteProfile from "./pages/Profile/CompleteProfile";
 import ExpenseList from "./components/Expense/ExpenseList";
 import Signup from "./pages/Login/Signup";
 import LoginForm from "./pages/Login/LoginForm";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataFromLocalStorage } from "./store/auth-actions";
+import { getExpenseData } from "./store/expense-action";
 
-// add tostify
 const App = () => {
-  const [darkMode,setDarkMode]=useState(false);
-  const toggleDarkMode=()=>{setDarkMode(prev=>!prev)};
-  const authCtx = useContext(authContext);
+  const [darkMode, setDarkMode] = useState(false);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+  const email = useSelector((state) => state.auth.email);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (email) {
+      dispatch(getExpenseData(email));
+    }
+  }, [email, dispatch]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
+  useEffect(() => {
+    dispatch(getDataFromLocalStorage());
+  }, [dispatch]);
   return (
-    <div id={darkMode?'dark':'light'}>
+    <div id={darkMode ? "dark" : "light"}>
       <Header darkMode={darkMode} toggleMode={toggleDarkMode} />
       <Switch>
         <Route path="/signup">
           <Signup />
         </Route>
         <Route path="/" exact>
-          {!authCtx.isLogin && <LoginForm />}
-          {authCtx.isLogin && <ExpenseList />}
+          {!isLogin && <LoginForm />}
+          {isLogin && <ExpenseList />}
         </Route>
 
-        {authCtx.isLogin && (
+        {isLogin && (
           <Route path="/expense">
             <ExpenseList />
           </Route>
         )}
-        {authCtx.isLogin && (
+        {isLogin && (
           <Route path="/welcome">
             <Welcome />
           </Route>
         )}
-        <Route path="/aboutus" exact>
+        <Route path="/aboutus" >
           <AboutUS />
         </Route>
         <Route path="/complete-profile">
           <CompleteProfile />
         </Route>
-        {!authCtx.isLogin && (
+        {!isLogin && (
           <Route path="/forgetpassword">
             <ForgetPasswrod />
           </Route>

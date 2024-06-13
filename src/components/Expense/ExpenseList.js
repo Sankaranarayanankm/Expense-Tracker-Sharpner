@@ -1,28 +1,31 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import ExpenseItem from "./ExpenseItem";
 import "./ExpenseList.css";
 import ExpenseForm from "./ExpenseForm";
-import { expenseContext } from "../../Context/ExpenseContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../../store/modalSlice";
 
 const ExpenseList = () => {
-  const [showForm, setShowForm] = useState(false);
-  const showFormHandler = () => setShowForm(true);
-  const hideFormHandler = () => setShowForm(false);
-  const expenseCtx = useContext(expenseContext);
-  const totalExpense = expenseCtx.items.reduce((acc, item) => {
+  const showForm = useSelector((state) => state.modal.show);
+  const expenseItems = useSelector((state) => state.expense.items);
+  const dispatch = useDispatch();
+  const showFormHandler = () => {
+    dispatch(modalActions.showModal());
+  };
+  const totalExpense = expenseItems.reduce((acc, item) => {
     return acc + +item.money;
   }, 0);
   const handleDownload = () => {
     let out = [];
-    for (let val in expenseCtx.items[0]) {
-      if (val != "id") {
+    for (let val in expenseItems[0]) {
+      if (val !== "id") {
         out.push(val);
       }
     }
-    const datas = expenseCtx.items.map((item) => {
+    const datas = expenseItems.map((item) => {
       let values = [];
       for (let val in item) {
-        if (val != "id") values.push(item[val]);
+        if (val !== "id") values.push(item[val]);
       }
       return values;
     });
@@ -44,7 +47,7 @@ const ExpenseList = () => {
 
   return (
     <div className="add-expense">
-      {showForm && <ExpenseForm hide={hideFormHandler} />}
+      {showForm && <ExpenseForm />}
       <div>
         {!showForm && <button onClick={showFormHandler}>Add Expense</button>}
         {totalExpense > 10000 && (
@@ -54,7 +57,7 @@ const ExpenseList = () => {
         )}
       </div>
       <ul className="expense-list">
-        {expenseCtx.items.map((item, ind) => (
+        {expenseItems.map((item, ind) => (
           <ExpenseItem key={ind} {...item} />
         ))}
       </ul>

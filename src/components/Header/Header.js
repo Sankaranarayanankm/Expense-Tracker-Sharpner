@@ -1,17 +1,19 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import "./Header.css";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { authContext } from "../../Context/authContextProvider";
-
-const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
+import { apiKey } from "../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromLocalStorage } from "../../store/auth-actions";
+import toast, { Toaster } from "react-hot-toast";
+import "./Header.css";
 
 const Header = (props) => {
   const history = useHistory();
   const [sending, setSending] = useState(false);
-  const authCtx = useContext(authContext);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+  const id = useSelector((state) => state.auth.id);
+  const dispatch = useDispatch();
 
   // handler to verify email
   const verifyEmailHandler = useCallback(async () => {
@@ -27,7 +29,7 @@ const Header = (props) => {
           },
           body: JSON.stringify({
             requestType: "VERIFY_EMAIL",
-            idToken: authCtx.id,
+            idToken: id,
           }),
         }
       );
@@ -38,58 +40,66 @@ const Header = (props) => {
       const resData = await response.json();
       console.log(resData);
     } catch (error) {
+      toast.error(error.message);
       alert(error);
     } finally {
       setSending(false);
     }
-  }, [authCtx.id, sending]);
+  }, [id, sending]);
 
   // handler to double check the weather the token is valid or not
   const verifyTokenHandler = () => {
-    if (!!authCtx.id) {
+    if (!!id) {
       verifyEmailHandler();
     }
   };
   const logoutHandler = () => {
-    authCtx.logout();
+    // authCtx.logout();
+    toast.success("Successfully logged out");
+    dispatch(removeFromLocalStorage());
     history.replace("/");
   };
 
   return (
-    <header className="header">
-      <nav>
-        <ul>
-          <li>
-            <NavLink activeClassName="active" to="/expense">
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact activeClassName="active" to="/welcome">
-              Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="active" to="/aboutus">
-              About US
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      {authCtx.isLogin && (
-        <divv className="toggle-modes" onClick={props.toggleMode}>
-          {props.darkMode ? <LightModeIcon /> : <DarkModeOutlinedIcon />}
-        </divv>
-      )}
-      {authCtx.isLogin && (
-        <div>
-          <button onClick={verifyTokenHandler}>
-            {sending ? "Verifying..." : "Verify"}
-          </button>
-          <button onClick={logoutHandler}>Logout</button>
-        </div>
-      )}
-    </header>
+    <>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
+      <header className="header">
+        <nav>
+          <ul>
+            <li>
+              <NavLink activeClassName="active" to="/expense">
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink exact activeClassName="active" to="/welcome">
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="active" to="/aboutus">
+                About US
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        {isLogin && (
+          <divv className="toggle-modes" onClick={props.toggleMode}>
+            {props.darkMode ? <LightModeIcon /> : <DarkModeOutlinedIcon />}
+          </divv>
+        )}
+        {isLogin && (
+          <div>
+            <button onClick={verifyTokenHandler}>
+              {sending ? "Verifying..." : "Verify"}
+            </button>
+            <button onClick={logoutHandler}>Logout</button>
+          </div>
+        )}
+      </header>
+    </>
   );
 };
 

@@ -1,27 +1,35 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./ExpenseForm.css";
-import { expenseContext } from "../../Context/ExpenseContextProvider";
 import Modal from "../../Modal/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { addExpenseHandler } from "../../store/expense-action";
+import { modalActions } from "../../store/modalSlice";
 
-const ExpenseForm = (props) => {
-  const expenseCtx = useContext(expenseContext);
+const ExpenseForm = () => {
+  const email = useSelector((state) => state.auth.email);
+  const isLoading = useSelector((state) => state.expense.loading);
+  const editedItem = useSelector((state) => state.expense.editedItem);
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     money: "",
     desc: "",
     category: "",
   });
-  const { isLoading } = expenseCtx;
 
   useEffect(() => {
-    if (expenseCtx.editedItem.id) {
+    if (editedItem.id) {
       setState({
-        money: expenseCtx.editedItem.money || "",
-        desc: expenseCtx.editedItem.desc || "",
-        category: expenseCtx.editedItem.category || "",
+        money: editedItem.money || "",
+        desc: editedItem.desc || "",
+        category: editedItem.category || "",
       });
     }
-  }, [expenseCtx.editedItem]);
+  }, [editedItem]);
+
+  const hideModalHandler = () => {
+    dispatch(modalActions.hideModal());
+  };
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -34,9 +42,9 @@ const ExpenseForm = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    // props.onAddExpense(state);
-    // adding the new item to the database
-    expenseCtx.addItem(state);
+
+    // expenseCtx.addItem(state);
+    dispatch(addExpenseHandler(state, email));
     setState({
       money: "",
       desc: "",
@@ -78,8 +86,10 @@ const ExpenseForm = (props) => {
             <option>Other</option>
           </select>
           <div className="button">
-          <button> {isLoading ? "please wait.." : "Add Expense"}</button>
-          <button className="modal-cancel" onClick={props.hide}>Cancel</button>
+            <button> {isLoading ? "please wait.." : "Add Expense"}</button>
+            <button className="modal-cancel" onClick={hideModalHandler}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>

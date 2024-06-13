@@ -6,7 +6,7 @@ const Welcome = () => {
     <div>
       <p>Welcome to Expense Tracker</p>
       <p>
-        Your porifle is incomplete.
+        Your profile is incomplete.
         <Link to="/complete-profile">Complete Now</Link>
       </p>
       <hr />

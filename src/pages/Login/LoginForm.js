@@ -1,20 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { authContext } from "../../Context/authContextProvider";
 import "./Login.css";
-
-const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
+import { useDispatch } from "react-redux";
+import { saveToLocalStorage } from "../../store/auth-actions";
+import { apiKey } from "../../store/authSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginForm = () => {
-  const authCtx = useContext(authContext);
-
+  const dispatch = useDispatch();
   const history = useHistory();
-
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
   });
+
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setState((prev) => {
@@ -49,14 +49,17 @@ const LoginForm = () => {
           const error = await response.json();
           throw new Error(error.error.message || "Failed to login");
         }
+        toast.success("Successfully logged in");
         const resData = await response.json();
-        authCtx.login(resData.idToken, resData.email);
+        let obj = {
+          id: resData.idToken,
+          email: resData.email,
+        };
+        dispatch(saveToLocalStorage(obj));
         history.push("/expense");
-        console.log("logged in");
       } catch (error) {
-        alert(error);
-
         console.log(error);
+        toast.error(error.message);
       } finally {
         setLoading(false);
       }
@@ -65,35 +68,41 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login">
-      <form className="form" onSubmit={submitHandler}>
-        <h1>Login</h1>
-        <input
-          type="email"
-          value={state.email}
-          onChange={changeHandler}
-          name="email"
-          placeholder="Email"
-        />
-        <br />
-        <input
-          type="password"
-          value={state.password}
-          onChange={changeHandler}
-          name="password"
-          placeholder="Passwrod"
-        />
-        <br />
+    <>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
 
-        <button>{loading ? "Sending Request" : "Login Up"} </button>
-        <Link to="/forgetpassword">Forget Password?</Link>
-      </form>
+      <div className="login">
+        <form className="form" onSubmit={submitHandler}>
+          <h1>Login</h1>
+          <input
+            type="email"
+            value={state.email}
+            onChange={changeHandler}
+            name="email"
+            placeholder="Email"
+          />
+          <br />
+          <input
+            type="password"
+            value={state.password}
+            onChange={changeHandler}
+            name="password"
+            placeholder="Password"
+          />
+          <br />
 
-      <p>
-        Don't have an account?
-        <Link to="/signup">Sign up</Link>
-      </p>
-    </div>
+          <button>{loading ? "Sending Request" : "Login Up"} </button>
+          <Link to="/forgetpassword">Forget Password?</Link>
+        </form>
+
+        <p>
+          Don't have an account?
+          <Link to="/signup">Sign up</Link>
+        </p>
+      </div>
+    </>
   );
 };
 
