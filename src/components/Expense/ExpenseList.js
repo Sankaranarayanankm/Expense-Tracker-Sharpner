@@ -44,7 +44,7 @@ const ExpenseList = () => {
     a.download = "trial.csv";
     a.click();
   };
-
+// console.log(expenseItems)
   return (
     <div className="add-expense">
       {showForm && <ExpenseForm />}

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import "./ForgetPassword.css";
 const apiKey = "AIzaSyAOs3l1dk_d6TtQJHjuzJ7YN1Fb6aWs9Mc";
 
-
 const ForgetPasswrod = (props) => {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const emailHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -26,12 +26,14 @@ const ForgetPasswrod = (props) => {
             }),
           }
         );
+
         if (!response.ok) {
           const errData = await response.json();
           throw new Error(errData.error.message || "Failed to reset password");
         }
         const resData = await response.json();
         console.log(resData);
+        setMessage("Check your email");
       } catch (error) {
         alert(error);
       }
@@ -49,6 +51,7 @@ const ForgetPasswrod = (props) => {
           placeholder="Email"
         />
         <button>Send Link</button>
+        {!!message && <p>{message}</p>}
         <p>
           <Link to="/"> Back to login?</Link>
         </p>
